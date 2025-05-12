@@ -1,5 +1,4 @@
-	# Titre 
- 📦 Projet de Programmation Orientée Objet en Java
+📦 Projet de Programmation Orientée Objet en Java
 Ce projet Java contient deux exercices pratiques illustrant les principaux concepts de la programmation orientée objet (POO) à travers des scénarios concrets.
 
 📁 Structure du Projet
