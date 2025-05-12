@@ -1,37 +1,49 @@
 /**
- * Classe représentant un résultat basé sur un rang
+ * Implémentation concrète de l'interface Resultat pour le classement par rang
+ * Cette classe gère les résultats basés sur le classement des athlètes
  */
 public class ResultatRang implements Resultat {
-    private int rang; // Rang de l'athlète
+    private int rang; // Position finale de l'athlète dans le classement
     
-    // Constructeur
+    /**
+     * Initialise un nouveau résultat avec le rang spécifié
+     * @param rang La position obtenue par l'athlète (1 = premier, etc.)
+     */
     public ResultatRang(int rang) {
         this.rang = rang;
     }
     
-    // Implémentation de toString() de l'interface Resultat
+    /**
+     * Convertit le rang en chaîne de caractères formatée
+     */
     public String toString() {
-        return "Rang: " + rang;
+        return "Position finale: " + rang;
     }
     
-    // Implémentation de affiche() de l'interface Resultat
+    /**
+     * Affiche le rang sur la sortie standard
+     */
     public void affiche() {
         System.out.println(this.toString());
     }
     
-    // Implémentation de compareTo() de l'interface Resultat
+    /**
+     * Compare deux résultats entre eux
+     * Un rang plus petit est considéré comme meilleur
+     */
     public int compareTo(Resultat r) {
         if (!(r instanceof ResultatRang)) {
-            throw new IllegalArgumentException("Peut seulement être comparé avec ResultatRang");
+            throw new IllegalArgumentException("Comparaison impossible avec un type différent");
         }
-        ResultatRang other = (ResultatRang) r;
-        // Remarque: Un rang plus bas est meilleur (1ère place est meilleure que 2ème place)
-        if (this.rang < other.rang) return 1;
-        if (this.rang > other.rang) return -1;
+        ResultatRang autre = (ResultatRang) r;
+        if (this.rang < autre.rang) return 1;
+        if (this.rang > autre.rang) return -1;
         return 0;
     }
     
-    // Accesseur pour rang
+    /**
+     * Récupère la valeur du rang
+     */
     public int getRang() {
         return rang;
     }

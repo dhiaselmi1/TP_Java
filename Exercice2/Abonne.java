@@ -1,16 +1,19 @@
 /**
- * Classe abstraite représentant un abonné téléphonique
+ * Classe fondamentale pour la gestion des abonnés mobiles
+ * Implémente les fonctionnalités communes à tous les types d'abonnements
  */
 public abstract class Abonne implements Communication {
-    protected int num;        // Numéro de téléphone
-    protected double solde;   // Solde en dinars
-    protected String nom;     // Nom de l'abonné
+    protected int num;        // Identifiant unique de la ligne
+    protected double solde;   // Crédit disponible
+    protected String nom;     // Identité du titulaire
+
+    // Tarification standardisée
+    private static final double COUT_SMS = 0.060;           // Tarif unique par SMS
+    private static final double TARIF_MEME_OPERATEUR = 0.090;   // Tarif préférentiel/minute
+    private static final double TARIF_AUTRE_OPERATEUR = 0.180;  // Tarif standard/minute
 
     /**
-     * Constructeur initialisant tous les attributs
-     * @param num Numéro de téléphone
-     * @param solde Solde initial en dinars
-     * @param nom Nom de l'abonné
+     * Initialisation complète d'un nouvel abonné
      */
     public Abonne(int num, double solde, String nom) {
         this.num = num;
@@ -19,51 +22,40 @@ public abstract class Abonne implements Communication {
     }
 
     /**
-     * Méthode abstraite pour obtenir le nom de l'opérateur
-     * @return Nom de l'opérateur
+     * Identification de l'opérateur de l'abonné
      */
     public abstract String getOperateur();
 
     /**
-     * Accesseur pour le nom
-     * @return Nom de l'abonné
+     * Récupération de l'identité de l'abonné
      */
     public String getNom() {
         return nom;
     }
 
     /**
-     * Accesseur pour le solde
-     * @return Solde actuel en dinars
+     * Consultation du crédit disponible
      */
     public double getSolde() {
         return solde;
     }
 
     /**
-     * Méthode pour recharger le solde
-     * @param m Montant à ajouter au solde
+     * Ajout de crédit sur la ligne
      */
     public void rechargerSolde(double m) {
         solde += m;
     }
 
     /**
-     * Méthode pour afficher tous les attributs
+     * Affichage des informations complètes de l'abonné
      */
     public void identifier() {
         System.out.println("Nom: " + nom + ", Numéro: " + num + ", Solde: " + solde + " dinars, Opérateur: " + getOperateur());
     }
 
-    // Constantes pour les tarifs
-    private static final double COUT_SMS = 0.060; // 60 millimes = 0.060 dinars
-    private static final double TARIF_MEME_OPERATEUR = 0.090; // 90 millimes = 0.090 dinars
-    private static final double TARIF_AUTRE_OPERATEUR = 0.180; // 180 millimes = 0.180 dinars
-    
     /**
-     * Implémentation de la méthode envoyerSMS de l'interface Communication
-     * @return true si l'envoi a réussi
-     * @throws SoldeInsuffisantException si le solde est insuffisant
+     * Service d'envoi de SMS avec vérification du solde
      */
     public boolean envoyerSMS() throws SoldeInsuffisantException {
         if (solde < COUT_SMS) {
@@ -74,11 +66,7 @@ public abstract class Abonne implements Communication {
     }
 
     /**
-     * Implémentation de la méthode appeler de l'interface Communication
-     * @param contact Abonné à appeler
-     * @param duree Durée de l'appel en minutes
-     * @return true si l'appel a réussi
-     * @throws SoldeInsuffisantException si le solde est insuffisant
+     * Service d'appel avec calcul du coût selon l'opérateur
      */
     public boolean appeler(Abonne contact, int duree) throws SoldeInsuffisantException {
         // Si même opérateur, tarif réduit, sinon tarif standard

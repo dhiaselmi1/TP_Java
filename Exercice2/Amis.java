@@ -1,13 +1,13 @@
 /**
- * Classe pour gérer une liste d'amis (abonnés)
+ * Gestionnaire de groupe d'amis pour les services de télécommunication
+ * Facilite la gestion collective des abonnés et leurs interactions
  */
 public class Amis {
-    private Abonne[] liste;      // Tableau d'abonnés
-    private int nbAbonnes;       // Nombre d'abonnés dans la liste
+    private Abonne[] liste;      // Membres du groupe
+    private int nbAbonnes;       // Taille effective du groupe
 
     /**
-     * Constructeur avec taille maximale
-     * @param tailleMax Nombre maximum d'abonnés dans la liste
+     * Création d'un nouveau groupe avec capacité limitée
      */
     public Amis(int tailleMax) {
         liste = new Abonne[tailleMax];
@@ -15,7 +15,7 @@ public class Amis {
     }
 
     /**
-     * Affiche les informations de tous les abonnés
+     * Affichage des détails de tous les membres
      */
     public void identifierTous() {
         for (int i = 0; i < nbAbonnes; i++) {
@@ -24,8 +24,7 @@ public class Amis {
     }
 
     /**
-     * Recharge le solde de tous les abonnés
-     * @param m Montant à ajouter au solde de chaque abonné
+     * Recharge collective des soldes
      */
     public void rechargerTous(double m) {
         for (int i = 0; i < nbAbonnes; i++) {
@@ -34,8 +33,7 @@ public class Amis {
     }
 
     /**
-     * Ajoute un abonné s'il y a de l'espace disponible
-     * @param a Abonné à ajouter à la liste
+     * Intégration d'un nouveau membre
      */
     public void rejoindreAmis(Abonne a) {
         if (nbAbonnes < liste.length) {
@@ -44,11 +42,7 @@ public class Amis {
     }
 
     /**
-     * Méthode privée pour construire une liste de noms d'abonnés selon une condition
-     * @param typeOperation 1 pour appel, 2 pour SMS
-     * @param contact Abonné à contacter (null pour SMS)
-     * @param duree Durée de l'appel (ignoré pour SMS)
-     * @return Chaîne contenant les noms des abonnés répondant à la condition
+     * Utilitaire de vérification des capacités de communication
      */
     private String construireListeAbonnes(int typeOperation, Abonne contact, int duree) {
         StringBuilder sb = new StringBuilder();
@@ -88,18 +82,14 @@ public class Amis {
     }
 
     /**
-     * Retourne les noms des abonnés qui peuvent appeler le contact pour une durée d
-     * @param contact Abonné à appeler
-     * @param d Durée de l'appel en minutes
-     * @return Chaîne contenant les noms des abonnés pouvant appeler
+     * Identification des membres pouvant appeler
      */
     public String quiAppelle(Abonne contact, int d) {
         return construireListeAbonnes(1, contact, d);
     }
 
     /**
-     * Retourne les noms des abonnés qui peuvent envoyer un SMS
-     * @return Chaîne contenant les noms des abonnés pouvant envoyer un SMS
+     * Identification des membres pouvant envoyer des SMS
      */
     public String quiEnvoieSMS() {
         return construireListeAbonnes(2, null, 0);

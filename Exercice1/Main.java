@@ -1,23 +1,19 @@
 
 
-/**
- * Programme principal pour tester les fonctionnalités de gestion d'épreuves sportives
- */
 public class Main {
     public static void main(String[] args) {
         // Création des athlètes avec leurs résultats
-        Athlete athlete1 = new Athlete(1, "Usain Bolt");
-        athlete1.setResultat(new ResultatDistance(9.58)); // Record du 100m en secondes
+        Athlete athlete1 = new Athlete(1, "Kylian Mbappé");
+        athlete1.setResultat(new ResultatDistance(9.71)); // Temps fictif pour le 100m
         
-        Athlete athlete2 = new Athlete(2, "Carl Lewis");
-        athlete2.setResultat(new ResultatDistance(8.95)); // Saut en longueur en mètres
+        Athlete athlete2 = new Athlete(2, "Zinedine Zidane");
+        athlete2.setResultat(new ResultatDistance(8.88)); // Distance fictive en mètres
         
-        Athlete athlete3 = new Athlete(3, "Michael Phelps");
-        // Utilisons le même type de résultat pour tous les athlètes
-        athlete3.setResultat(new ResultatDistance(10.20)); // Une distance fictive pour l'exemple
+        Athlete athlete3 = new Athlete(3, "Karim Benzema");
+        athlete3.setResultat(new ResultatDistance(9.95)); 
         
         // Création d'une épreuve
-        Epreuve competition = new Epreuve("Jeux Olympiques 2024", 5);
+        Epreuve competition = new Epreuve("Championnat de France 2024", 6);
         
         // Ajout des athlètes à l'épreuve
         competition.ajoutAthlete(athlete1);
@@ -25,44 +21,41 @@ public class Main {
         competition.ajoutAthlete(athlete3);
         
         // Affichage des informations de l'épreuve
-        System.out.println("--- Informations de l'épreuve ---");
+        System.out.println("=== Détails de la Compétition ===");
         System.out.println(competition);
         
         // Modification d'un résultat
         try {
-            competition.fixeResultat(2, new ResultatDistance(9.10));
-            System.out.println("\nRésultat de Carl Lewis mis à jour: " + competition.getResultat(2));
+            competition.fixeResultat(2, new ResultatDistance(9.15));
+            System.out.println("\nNouveau résultat de " + athlete2.getNon() + ": " + competition.getResultat(2));
         } catch (IllegalStateException e) {
-            System.out.println("Impossible de modifier le résultat: l'épreuve est terminée");
+            System.out.println("Erreur: Modification impossible - compétition terminée");
         }
         
-        // Affichage du record olympique avant de terminer l'épreuve
-        System.out.println("\n--- Record Olympique avant la fin ---");
+        // Affichage du record
+        System.out.println("\n=== Record actuel ===");
         Resultat record = competition.getRecordOlympique();
         if (record != null) {
             System.out.println("Record: " + record);
         } else {
-            System.out.println("Aucun record établi.");
+            System.out.println("Aucun record enregistré.");
         }
         
-        // Terminer l'épreuve
         competition.terminer();
-        System.out.println("\nL'épreuve est maintenant terminée: " + competition.estTerminee());
+        System.out.println("\nStatut de la compétition: " + (competition.estTerminee() ? "Terminée" : "En cours"));
         
-        // Tentative de modification après la fin (doit échouer)
         try {
-            competition.fixeResultat(1, new ResultatDistance(9.50));
+            competition.fixeResultat(1, new ResultatDistance(9.65));
         } catch (IllegalStateException e) {
-            System.out.println("Impossible de modifier le résultat: l'épreuve est terminée");
+            System.out.println("Erreur: Modification impossible - compétition terminée");
         }
         
-        // Affichage du vainqueur
-        System.out.println("\n--- Vainqueur ---");
+        System.out.println("\n=== Résultats Finaux ===");
         Athlete vainqueur = competition.getVinqueur();
         if (vainqueur != null) {
-            System.out.println("Le vainqueur est: " + vainqueur.getNon() + " avec " + vainqueur.getResultat());
+            System.out.println("Champion: " + vainqueur.getNon() + " - Performance: " + vainqueur.getResultat());
         } else {
-            System.out.println("Aucun vainqueur déterminé.");
+            System.out.println("Pas de champion désigné.");
         }
     }
 }
